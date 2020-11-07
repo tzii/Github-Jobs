@@ -1,5 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { Button } from "react-bootstrap";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Home from "./components/Home";
+import JobDetail from "./components/JobDetail";
+import { getJobs } from "./store/jobsSlice";
 
-export default function App() {
-    return <div>Github Jobs</div>;
-}
+export const App = ({ getJobs, isHome, jobId }) => {
+    useEffect(() => {
+        getJobs();
+    });
+
+    return (
+        <>
+            <Header />
+            {isHome ? <Home /> : <JobDetail id={jobId} />}
+            <Footer />
+        </>
+    );
+};
+
+const mapStateToProps = (state) => ({
+    isHome: state.idHome,
+    jobId: state.jobId,
+});
+
+const mapDispatchToProps = { getJobs };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
