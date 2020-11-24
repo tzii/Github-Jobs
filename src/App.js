@@ -13,11 +13,11 @@ export const App = ({ getJobs, isHome, jobId }) => {
     });
 
     return (
-        <>
+        <div className="app">
             <Header />
             {isHome ? <Home /> : <JobDetail id={jobId} />}
             <Footer />
-        </>
+        </div>
     );
 };
 

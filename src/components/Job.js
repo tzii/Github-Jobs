@@ -10,14 +10,20 @@ export const Job = ({ job, setIsHome, setJobId }) => {
         setJobId(job.id);
         setIsHome(false);
     };
+    const count = (day) => {
+        let day1 = new Date();
+        let day2 = new Date(day);
+        return `${Math.ceil(
+            (day1.getTime() - day2.getTime()) / (1000 * 60 * 60 * 24)
+        )} days ago`;
+    };
+
     return (
         <div
-            className="mb-4 p-2 rounded-lg shadow"
+            className="mb-4 p-2 rounded-lg shadow d-flex bg-white cursor-pointer"
             style={{
-                display: "flex",
                 flexWrap: "wrap",
                 alignItems: "flex-start",
-                cursor: "pointer",
             }}
             onClick={clickHandler}
         >
@@ -52,7 +58,7 @@ export const Job = ({ job, setIsHome, setJobId }) => {
                     </div>
                     <div className="job-time">
                         <Schedule />
-                        <span>5 days ago</span>
+                        <span>{count(job.created_at)}</span>
                     </div>
                 </div>
             </div>

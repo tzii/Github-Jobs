@@ -1,8 +1,19 @@
 import React from "react";
 import bg from "../images/backgroundImg.png";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
+import { setDescription } from "../store/descriptionSlice";
+import { getJobs } from "../store/jobsSlice";
+import { connect } from "react-redux";
 
-export default function FormSearchCompanies() {
+export function FormSearchCompanies({ setDescription, getJobs }) {
+    const submitHandler = (e) => {
+        e.preventDefault();
+        getJobs();
+    };
+
+    const searchChangeHandler = (e) => {
+        setDescription(e.target.value);
+    };
     return (
         <Container>
             <Row className="py-5 justify-content-center position-relative">
@@ -10,19 +21,20 @@ export default function FormSearchCompanies() {
                     src={bg}
                     className="position-absolute h-100 rounded-lg"
                     style={{
-                        zIndex: -1,
+                        zIndex: 0,
                         top: 0,
                         left: 15,
                         objectFit: "cover",
                         width: "calc(100% - 30px)",
                     }}
                 />
-                <Col md={8} className="position-relative">
-                    <Form id="form-search-companies">
+                <Col md={8} className="position-relative" style={{ zIndex: 1 }}>
+                    <Form id="form-search-companies" onSubmit={submitHandler}>
                         <Form.Control
                             type="text"
                             size="lg"
                             placeholder="Title, companies, expertise or benefits"
+                            onChange={searchChangeHandler}
                         />
                         <Button
                             className="px-4 position-absolute"
@@ -36,3 +48,12 @@ export default function FormSearchCompanies() {
         </Container>
     );
 }
+
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = { setDescription, getJobs };
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FormSearchCompanies);
